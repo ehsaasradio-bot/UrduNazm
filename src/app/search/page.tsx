@@ -83,11 +83,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                       {poem.title_en}
                     </p>
                     <p className="text-[12px] text-muted-foreground mt-0.5">
-                      {Array.isArray(poem.poet) ? poem.poet[0]?.name_en : poem.poet?.name_en}
-                      {poem.category && (
-                        <span className="ml-2 text-accent/70">
-                          {Array.isArray(poem.category) ? poem.category[0]?.name_en : poem.category?.name_en}
-                        </span>
+                      {poem.poet[0]?.name_en}
+                      {poem.category?.[0] && (
+                        <span className="ml-2 text-accent/70">{poem.category[0].name_en}</span>
                       )}
                     </p>
                   </div>
