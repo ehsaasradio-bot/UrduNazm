@@ -1,8 +1,21 @@
 import OpenAI from "openai";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Rate limiter: 20 requests per hour per IP
+// Only initialised when Upstash env vars are present (graceful fallback otherwise)
+const ratelimit =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(20, "1 h"),
+        analytics: false,
+      })
+    : null;
 
 const SYSTEM_PROMPT = `You are UrduNazm AI — a knowledgeable and poetic assistant specializing in Urdu poetry and literature.
 
@@ -24,6 +37,30 @@ Guidelines:
 
 export async function POST(request: Request) {
   try {
+    // ── Rate limiting ──
+    if (ratelimit) {
+      const ip =
+        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+        "anonymous";
+      const { success, limit, remaining } = await ratelimit.limit(ip);
+
+      if (!success) {
+        return new Response(
+          JSON.stringify({
+            error: `Too many requests. You have used ${limit} of ${limit} messages this hour. Please try again later.`,
+          }),
+          {
+            status: 429,
+            headers: {
+              "Content-Type": "application/json",
+              "X-RateLimit-Limit": String(limit),
+              "X-RateLimit-Remaining": String(remaining),
+            },
+          }
+        );
+      }
+    }
+
     const { messages } = await request.json();
 
     if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "your_openai_api_key_here") {

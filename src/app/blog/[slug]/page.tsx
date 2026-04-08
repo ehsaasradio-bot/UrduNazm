@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 import { getBlogBySlug } from "@/lib/supabase/queries";
 import BlogPost from "@/components/blog/BlogPost";
 import { blogPostingSchema } from "@/lib/jsonld";
@@ -94,10 +95,10 @@ export default async function BlogDetailPage({
           </p>
         )}
 
-        {/* English content */}
+        {/* English content — sanitized to prevent XSS */}
         <div
           className="text-[15px] text-foreground/90 leading-[1.9] whitespace-pre-line"
-          dangerouslySetInnerHTML={{ __html: blog.content_en }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content_en) }}
         />
 
         {/* Urdu content */}

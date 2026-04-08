@@ -3,6 +3,7 @@ import type {
   Poet,
   Poem,
   PoemWithRelations,
+  SearchPoem,
   Category,
   Blog,
   BookmarkWithPoem,
@@ -263,7 +264,7 @@ export async function removeBookmark(userId: string, poemId: string): Promise<vo
 // ==================== SEARCH ====================
 
 export interface SearchResults {
-  poems: PoemWithRelations[];
+  poems: SearchPoem[];
   poets: Poet[];
   blogs: Blog[];
 }

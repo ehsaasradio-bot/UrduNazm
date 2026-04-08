@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -53,7 +54,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         className="w-8 h-8 rounded-full overflow-hidden border border-border hover:border-accent/30 transition-colors flex items-center justify-center"
       >
         {avatar ? (
-          <img src={avatar} alt="" className="w-full h-full object-cover" />
+          <Image src={avatar} alt={name} width={32} height={32} className="w-full h-full object-cover" />
         ) : (
           <span className="text-[12px] font-semibold text-foreground">{initials}</span>
         )}
