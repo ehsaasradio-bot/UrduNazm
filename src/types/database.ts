@@ -44,14 +44,15 @@ export interface PoemWithRelations extends Poem {
   category: Pick<Category, "id" | "name_en" | "name_ur" | "slug"> | null;
 }
 
-/** Minimal poem shape returned by the search modal query (subset of PoemWithRelations) */
+/** Minimal poem shape returned by the search modal query.
+ *  Supabase returns joined relations as arrays, so poet/category are arrays here. */
 export interface SearchPoem {
   id: string;
   title_en: string;
   title_ur: string;
   slug: string;
-  poet: Pick<Poet, "id" | "name_en" | "name_ur" | "slug">;
-  category: Pick<Category, "id" | "name_en" | "name_ur" | "slug"> | null;
+  poet: Pick<Poet, "id" | "name_en" | "name_ur" | "slug">[];
+  category: Pick<Category, "id" | "name_en" | "name_ur" | "slug">[] | null;
 }
 
 export interface Blog {

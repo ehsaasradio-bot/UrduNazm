@@ -77,7 +77,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         ]);
 
         setResults({
-          poems: (poemsResult.data ?? []) as SearchResults["poems"],
+          poems: (poemsResult.data ?? []) as unknown as SearchResults["poems"],
           poets: (poetsResult.data ?? []) as SearchResults["poets"],
           blogs: (blogsResult.data ?? []) as SearchResults["blogs"],
         });
@@ -180,7 +180,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 >
                   <div>
                     <p className="text-[14px] font-medium text-foreground group-hover:text-accent transition-colors">{poem.title_en}</p>
-                    <p className="text-[12px] text-muted-foreground">{poem.poet.name_en}</p>
+                    <p className="text-[12px] text-muted-foreground">{Array.isArray(poem.poet) ? poem.poet[0]?.name_en : poem.poet?.name_en}</p>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground/30 group-hover:text-accent/50 transition-colors" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </Link>
