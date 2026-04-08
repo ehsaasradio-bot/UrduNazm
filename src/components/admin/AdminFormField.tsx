@@ -58,7 +58,7 @@ export function SubmitButton({ label, loadingLabel, pending }: SubmitButtonProps
 
 interface DeleteButtonProps {
   id: string;
-  action: (prev: unknown, formData: FormData) => Promise<void>;
+  action: (formData: FormData) => Promise<void>;
   label?: string;
 }
 

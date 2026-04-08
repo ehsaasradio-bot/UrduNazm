@@ -69,7 +69,7 @@ export async function updatePoem(id: string, formData: FormData) {
   redirect("/admin/poems");
 }
 
-export async function deletePoem(_: unknown, formData: FormData) {
+export async function deletePoem(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = formData.get("id") as string;
   const { error } = await supabase.from("poems").delete().eq("id", id);
@@ -127,7 +127,7 @@ export async function updatePoet(id: string, formData: FormData) {
   redirect("/admin/poets");
 }
 
-export async function deletePoet(_: unknown, formData: FormData) {
+export async function deletePoet(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = formData.get("id") as string;
   const { error } = await supabase.from("poets").delete().eq("id", id);
@@ -191,7 +191,7 @@ export async function updateBlog(id: string, formData: FormData) {
   redirect("/admin/blogs");
 }
 
-export async function deleteBlog(_: unknown, formData: FormData) {
+export async function deleteBlog(formData: FormData) {
   const { supabase } = await requireAdmin();
   const id = formData.get("id") as string;
   const { error } = await supabase.from("blogs").delete().eq("id", id);
