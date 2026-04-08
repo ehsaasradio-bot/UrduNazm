@@ -303,7 +303,7 @@ export async function search(query: string): Promise<SearchResults> {
   ]);
 
   return {
-    poems: (poemsResult.data ?? []) as PoemWithRelations[],
+    poems: (poemsResult.data ?? []) as unknown as SearchPoem[],
     poets: poetsResult.data ?? [],
     blogs: blogsResult.data ?? [],
   };
