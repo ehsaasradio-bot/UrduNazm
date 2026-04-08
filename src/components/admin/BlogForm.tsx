@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { FormField, inputCls, textareaCls, selectCls, SubmitButton } from "./AdminFormField";
-import { toSlug } from "@/lib/admin/actions";
+import { toSlug } from "@/lib/admin/utils";
 import type { Blog } from "@/types/database";
 
 const BLOG_CATEGORIES = [

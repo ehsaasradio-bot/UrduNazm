@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { FormField, inputCls, textareaCls, SubmitButton } from "./AdminFormField";
-import { toSlug } from "@/lib/admin/actions";
+import { toSlug } from "@/lib/admin/utils";
 import type { Poet } from "@/types/database";
 
 interface PoetFormProps {

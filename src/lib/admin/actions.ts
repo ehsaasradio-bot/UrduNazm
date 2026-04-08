@@ -3,17 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-export function toSlug(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
+import { toSlug } from "@/lib/admin/utils";
 
 async function requireAdmin() {
   const supabase = await createClient();
