@@ -77,9 +77,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         ]);
 
         setResults({
-          poems: (poemsResult.data ?? []) as SearchResults["poems"],
-          poets: (poetsResult.data ?? []) as SearchResults["poets"],
-          blogs: (blogsResult.data ?? []) as SearchResults["blogs"],
+          poems: (poemsResult.data ?? []) as unknown as SearchResults["poems"],
+          poets: (poetsResult.data ?? []) as unknown as SearchResults["poets"],
+          blogs: (blogsResult.data ?? []) as unknown as SearchResults["blogs"],
         });
       } catch {
         // silent fail
