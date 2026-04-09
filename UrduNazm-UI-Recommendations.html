@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UrduNazm — UI/UX Recommendations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #09090b;
+    color: #e4e4e7;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #27272a;
+  }
+
+  header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #c8a96e, #e8d5a8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  header p { color: #71717a; font-size: 1rem; }
+
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #c8a96e;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fafafa;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d4d4d8;
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+
+  p { color: #a1a1aa; font-size: 0.92rem; margin-bottom: 14px; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .card {
+    background: #111114;
+    border: 1px solid #1e1e24;
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: #3f3f46; }
+
+  .card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fafafa;
+    margin-bottom: 8px;
+  }
+
+  .card p { font-size: 0.84rem; color: #71717a; margin-bottom: 0; }
+
+  .highlight {
+    background: #c8a96e15;
+    border-left: 3px solid #c8a96e;
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 20px 0;
+  }
+
+  .highlight p { color: #d4d4d8; margin-bottom: 0; }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+
+  .comparison > div {
+    background: #111114;
+    border: 1px solid #1e1e24;
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .comparison h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .comparison .weak h4 { color: #f87171; }
+  .comparison .strong h4 { color: #4ade80; }
+
+  .comparison li {
+    font-size: 0.84rem;
+    color: #71717a;
+    margin-bottom: 6px;
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .comparison .weak li::before { content: '✗'; position: absolute; left: 0; color: #f87171; }
+  .comparison .strong li::before { content: '✓'; position: absolute; left: 0; color: #4ade80; }
+
+  .color-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+
+  .color-swatch {
+    width: 80px;
+    text-align: center;
+  }
+
+  .color-swatch .swatch {
+    width: 80px;
+    height: 56px;
+    border-radius: 10px;
+    border: 1px solid #27272a;
+    margin-bottom: 6px;
+  }
+
+  .color-swatch span {
+    font-size: 0.7rem;
+    color: #71717a;
+    font-family: 'SF Mono', monospace;
+  }
+
+  .color-swatch small {
+    display: block;
+    font-size: 0.65rem;
+    color: #52525b;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .tag {
+    background: #18181b;
+    border: 1px solid #27272a;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    color: #a1a1aa;
+  }
+
+  .numbered-list {
+    list-style: none;
+    counter-reset: item;
+    margin: 16px 0;
+  }
+
+  .numbered-list li {
+    counter-increment: item;
+    padding: 12px 16px 12px 48px;
+    position: relative;
+    font-size: 0.88rem;
+    color: #a1a1aa;
+    background: #111114;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #1e1e24;
+  }
+
+  .numbered-list li::before {
+    content: counter(item, decimal-leading-zero);
+    position: absolute;
+    left: 16px;
+    color: #c8a96e;
+    font-weight: 700;
+    font-size: 0.82rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.85rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    background: #111114;
+    color: #c8a96e;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid #27272a;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #1e1e24;
+    color: #a1a1aa;
+  }
+
+  .divider {
+    height: 1px;
+    background: #27272a;
+    margin: 48px 0;
+  }
+
+  @media (max-width: 640px) {
+    header h1 { font-size: 1.8rem; }
+    .comparison { grid-template-columns: 1fr; }
+    .color-row { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>UrduNazm UI/UX Recommendations</h1>
+    <p>Analysis of Rekhta.org + 2026 Design Trends → Actionable Design Direction</p>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- SECTION 1: REKHTA ANALYSIS -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 1</div>
+    <h2>Rekhta.org — What They Do Well & Where We Improve</h2>
+
+    <p>Rekhta is the largest Urdu poetry platform with 30,000+ ghazals/nazms from 2,500+ poets across 3 centuries. They have massive content, built-in glossary, multi-script support (Urdu, Devanagari, Roman), and a mobile app. Here's the honest assessment:</p>
+
+    <div class="comparison">
+      <div class="weak">
+        <h4>Rekhta Weaknesses (Our Opportunity)</h4>
+        <ul>
+          <li>Cluttered, information-dense homepage — feels overwhelming</li>
+          <li>Dated visual design — not premium or modern</li>
+          <li>Too many navigation items and content types competing</li>
+          <li>Urdu typography could be more beautiful — feels functional, not artistic</li>
+          <li>No AI-powered features (search, chat, recommendations)</li>
+          <li>Dark mode not available</li>
+          <li>Slow page loads due to heavy content</li>
+          <li>Mobile experience feels like a squeezed desktop site</li>
+          <li>No personalization or smart curation</li>
+          <li>Ads and promotions dilute the reading experience</li>
+        </ul>
+      </div>
+      <div class="strong">
+        <h4>Rekhta Strengths (Learn From)</h4>
+        <ul>
+          <li>Comprehensive poet profiles with era and bio</li>
+          <li>Multi-script toggle (Urdu, Hindi, Roman) — we do Urdu + English</li>
+          <li>Built-in word meanings on click — glossary feature</li>
+          <li>Audio recitations of poetry</li>
+          <li>Explorer section for browsing by mood/topic/occasion</li>
+          <li>Strong SEO — ranks #1 for most Urdu poetry queries</li>
+          <li>Popular choice curation (trending poems)</li>
+          <li>Deep content categorization (ghazal, nazm, rubai, qita, etc.)</li>
+          <li>Poet filtering by era and location</li>
+          <li>E-book library integration</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Our positioning:</strong> UrduNazm is NOT trying to be Rekhta. We are a curated, premium, modern poetry experience — think Apple meets poetry. Less content, more beauty. Quality over quantity. AI-powered. Dark-first. Fast.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 2: 2026 TRENDS WE ADOPT -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 2</div>
+    <h2>2026 Design Trends We're Adopting</h2>
+    <p>Based on research from Figma, UX Collective, and leading design publications — filtered for what makes sense for a poetry platform.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>1. Dark-First Design</h4>
+        <p>Dark mode is the default in 2026. Poetry reads beautifully on dark backgrounds — gold on black is timeless. Light mode available as toggle. Dynamic theming based on system preference.</p>
+      </div>
+      <div class="card">
+        <h4>2. Kinetic Typography</h4>
+        <p>Hero text that builds letter by letter. Urdu verses that fade in line by line. Words that gently animate on scroll. Text IS our content — make it the star.</p>
+      </div>
+      <div class="card">
+        <h4>3. Scroll-Driven Storytelling</h4>
+        <p>Long homepage that unfolds as you scroll. Subtle parallax. Progressive reveals. Each section enters with purpose. No jarring page loads — smooth transitions.</p>
+      </div>
+      <div class="card">
+        <h4>4. Micro-Interactions</h4>
+        <p>Bookmark heart animations. Button ripples. Hover states on cards. Loading shimmer effects. Every tap gives feedback. Interfaces feel alive, not static.</p>
+      </div>
+      <div class="card">
+        <h4>5. AI Integration</h4>
+        <p>AI chat for poetry exploration. Smart search that understands context. "Find me a ghazal about longing" — conversational discovery. AI-powered translation assistance.</p>
+      </div>
+      <div class="card">
+        <h4>6. Generous Whitespace</h4>
+        <p>Poetry needs room to breathe. Large margins. Ample line spacing. No visual clutter. Every element earns its place. Apple-level spatial hierarchy.</p>
+      </div>
+      <div class="card">
+        <h4>7. Variable Fonts</h4>
+        <p>Single font files with continuous weight ranges. Smooth weight transitions on hover. Urdu Nastaliq rendered at optimal size with proper line height (2.0-2.4x).</p>
+      </div>
+      <div class="card">
+        <h4>8. Glassmorphism + Depth</h4>
+        <p>Frosted glass navbar. Subtle layered depth on cards. Background blur on modals. Creates visual hierarchy without hard borders. Modern, premium feel.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 3: COLOR SYSTEM -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 3</div>
+    <h2>Color System</h2>
+    <p>A refined, warm palette that honors Urdu aesthetics — gold and dark, with enough contrast for accessibility.</p>
+
+    <h3>Dark Mode (Primary)</h3>
+    <div class="color-row">
+      <div class="color-swatch">
+        <div class="swatch" style="background:#09090b;"></div>
+        <span>#09090b</span>
+        <small>Background</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#18181b;"></div>
+        <span>#18181b</span>
+        <small>Card/Surface</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#27272a;"></div>
+        <span>#27272a</span>
+        <small>Border</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#fafafa;"></div>
+        <span>#fafafa</span>
+        <small>Text</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#a1a1aa;"></div>
+        <span>#a1a1aa</span>
+        <small>Muted Text</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#c8a96e;"></div>
+        <span>#c8a96e</span>
+        <small>Gold Accent</small>
+      </div>
+    </div>
+
+    <h3>Light Mode</h3>
+    <div class="color-row">
+      <div class="color-swatch">
+        <div class="swatch" style="background:#fafaf9; border-color:#e7e5e4;"></div>
+        <span>#fafaf9</span>
+        <small>Background</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#ffffff; border-color:#e7e5e4;"></div>
+        <span>#ffffff</span>
+        <small>Card/Surface</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#e7e5e4;"></div>
+        <span>#e7e5e4</span>
+        <small>Border</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#1c1917;"></div>
+        <span>#1c1917</span>
+        <small>Text</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#78716c;"></div>
+        <span>#78716c</span>
+        <small>Muted Text</small>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#a0845c;"></div>
+        <span>#a0845c</span>
+        <small>Gold Accent</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 4: TYPOGRAPHY -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 4</div>
+    <h2>Typography System</h2>
+
+    <table>
+      <tr>
+        <th>Usage</th>
+        <th>Font</th>
+        <th>Weight</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>English headings</td>
+        <td>Inter</td>
+        <td>600-700</td>
+        <td>Tight tracking (-0.02em). Clean, modern.</td>
+      </tr>
+      <tr>
+        <td>English body</td>
+        <td>Inter</td>
+        <td>400</td>
+        <td>Line height 1.6-1.7. Comfortable reading.</td>
+      </tr>
+      <tr>
+        <td>Urdu headings</td>
+        <td>Noto Nastaliq Urdu</td>
+        <td>700</td>
+        <td>RTL. Line height 2.2-2.4. Large sizing (1.3x English).</td>
+      </tr>
+      <tr>
+        <td>Urdu poetry body</td>
+        <td>Noto Nastaliq Urdu</td>
+        <td>400</td>
+        <td>RTL. Line height 2.4+. Generous spacing between verses.</td>
+      </tr>
+      <tr>
+        <td>Code / meta</td>
+        <td>System mono</td>
+        <td>400</td>
+        <td>Dates, tags, small labels.</td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <p><strong>Key RTL rules:</strong> Always set dir="rtl" on Urdu containers. Use CSS logical properties (margin-inline-start, not margin-left). Urdu font size should be ~1.3x English equivalent for visual parity. Avoid bold for long Urdu text — connected letterforms become harder to read.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 5: PAGE-BY-PAGE DESIGN DIRECTION -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 5</div>
+    <h2>Page-by-Page Design Direction</h2>
+
+    <h3>Navbar</h3>
+    <p>Sticky, frosted-glass effect (backdrop-blur). Logo left, nav links center, search + theme toggle + login right. On mobile: hamburger → full-screen drawer with large touch targets. Transparent on hero, solid on scroll.</p>
+
+    <h3>Homepage</h3>
+    <ol class="numbered-list">
+      <li><strong>Hero:</strong> Full-viewport. Large Urdu verse center-aligned with subtle fade-in animation. English translation below in smaller text. Minimal CTA: "Explore Poetry". Dark gradient background with faint decorative pattern.</li>
+      <li><strong>Featured Poems:</strong> Horizontal scroll or 3-column grid. Card shows Urdu excerpt (2-3 lines), poet name, category badge. Hover lifts card with shadow. Gold accent on hover border.</li>
+      <li><strong>Featured Poets:</strong> Circular avatar images with name below (Urdu primary, English secondary). Horizontal scroll on mobile. Subtle parallax on desktop.</li>
+      <li><strong>Verse of the Day:</strong> Full-width section with large Urdu typography on elegant background. Changes daily. Shareable.</li>
+      <li><strong>Recent Blog:</strong> 2-3 cards. Cover image, title, date, reading time. Clean layout.</li>
+      <li><strong>CTA / AI Chat Promo:</strong> "Ask about any poem" — teaser for the AI chat feature. Floating chat button persistent across site.</li>
+    </ol>
+
+    <h3>Poets Page</h3>
+    <p>Grid of poet cards (image, name Urdu + English, era). Search bar at top. Filter by era (Classical, Modern, Contemporary). Cards have hover zoom on image. Clean, gallery-like feel. Each card links to poet profile.</p>
+
+    <h3>Poet Profile</h3>
+    <p>Large hero with poet image + name + dates. Bio section with tabs (Urdu | English). Below: grid of their poems. Bookmark poet feature. Share button. Related poets sidebar.</p>
+
+    <h3>Poems Listing</h3>
+    <p>Left sidebar filters (category, poet, era). Main area: poem cards in list or grid view (toggle). Each card: Urdu title, first 2 lines preview, poet name, category badge. Sort by: newest, popular, poet.</p>
+
+    <h3>Poem Detail</h3>
+    <p>The most important page. Full Urdu text centered with beautiful Nastaliq rendering. Line-by-line layout with generous spacing. Toggle for English translation (appears below each line or side-by-side). Bookmark button (heart with animation). Share. Poet attribution with link. Related poems below.</p>
+
+    <h3>Blog</h3>
+    <p>Clean magazine layout. Large featured post at top. Below: 2-column grid of posts. Each card: cover image, title, excerpt, date, read time. Individual post: long-form with good typography, images, pull quotes.</p>
+
+    <h3>Search</h3>
+    <p>Cmd+K modal (2026 standard). Full-screen on mobile. Search across poems, poets, blog. Results grouped by type with icons. Recent searches. Debounced live results. AI-enhanced: "ghazals about the night" works.</p>
+
+    <h3>AI Chat</h3>
+    <p>Floating button bottom-right. Opens slide-up panel or dedicated /chat page. Streaming responses. System prompt: Urdu poetry expert. Features: explain a verse, translate, find similar poems, discuss a poet's style. Clean chat bubbles with proper RTL for Urdu responses.</p>
+
+    <h3>Auth & Profile</h3>
+    <p>Google login only — single button, no form. Profile page: avatar, name, bookmarked poems grid. Minimal. No settings bloat.</p>
+
+    <h3>Footer</h3>
+    <p>4-column on desktop: About, Explore (Poets, Poems, Blog), Features (Search, AI Chat), Social links. Urdu tagline. Copyright. Subtle top border. Clean, not crowded.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 6: PERFORMANCE & SEO -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 6</div>
+    <h2>Performance & SEO Strategy</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>Server Components</h4>
+        <p>All listing and detail pages are Server Components by default. Zero client JS for content pages. Only interactive elements (search, chat, bookmarks) use "use client".</p>
+      </div>
+      <div class="card">
+        <h4>Font Loading</h4>
+        <p>Inter via next/font (self-hosted). Noto Nastaliq via Google Fonts with display=swap and preconnect. Font subsetting for Urdu to reduce payload.</p>
+      </div>
+      <div class="card">
+        <h4>Image Optimization</h4>
+        <p>All images via next/image with automatic WebP/AVIF. Poet images: fixed sizes with blur placeholders. Blog covers: responsive srcSet.</p>
+      </div>
+      <div class="card">
+        <h4>Metadata</h4>
+        <p>Dynamic metadata per page. Open Graph images auto-generated with poem excerpt. Twitter cards. hreflang tags for Urdu content. JSON-LD structured data for poems and poets.</p>
+      </div>
+      <div class="card">
+        <h4>Sitemap & Robots</h4>
+        <p>Dynamic sitemap.ts that lists all poems, poets, blog posts. Proper robots.txt. Canonical URLs. No duplicate content between Urdu/English views.</p>
+      </div>
+      <div class="card">
+        <h4>Core Web Vitals</h4>
+        <p>Target: LCP < 2.5s, FID < 100ms, CLS < 0.1. Skeleton loaders for async content. No layout shift from font loading. Streaming SSR for long lists.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 7: KEY DIFFERENTIATORS -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 7</div>
+    <h2>How UrduNazm Beats Rekhta</h2>
+
+    <table>
+      <tr>
+        <th>Aspect</th>
+        <th>Rekhta</th>
+        <th>UrduNazm</th>
+      </tr>
+      <tr>
+        <td>Design</td>
+        <td>Functional, dated, cluttered</td>
+        <td>Premium, minimal, Apple-inspired</td>
+      </tr>
+      <tr>
+        <td>Dark Mode</td>
+        <td>Not available</td>
+        <td>Dark-first with light toggle</td>
+      </tr>
+      <tr>
+        <td>AI Features</td>
+        <td>None</td>
+        <td>AI chat, smart search, verse explanation</td>
+      </tr>
+      <tr>
+        <td>Performance</td>
+        <td>Heavy, slow loads</td>
+        <td>Next.js SSR, optimized Core Web Vitals</td>
+      </tr>
+      <tr>
+        <td>Typography</td>
+        <td>Functional Nastaliq</td>
+        <td>Beautiful, generous Nastaliq with animations</td>
+      </tr>
+      <tr>
+        <td>Mobile</td>
+        <td>Squeezed desktop layout</td>
+        <td>Mobile-first responsive design</td>
+      </tr>
+      <tr>
+        <td>Content</td>
+        <td>30,000+ poems (quantity)</td>
+        <td>Curated collection (quality + growing)</td>
+      </tr>
+      <tr>
+        <td>Monetization</td>
+        <td>Ads everywhere</td>
+        <td>Clean, ad-free reading experience</td>
+      </tr>
+      <tr>
+        <td>Animations</td>
+        <td>Static pages</td>
+        <td>Kinetic typography, scroll reveals, micro-interactions</td>
+      </tr>
+      <tr>
+        <td>Personalization</td>
+        <td>Basic bookmarks</td>
+        <td>AI recommendations, smart bookmarks</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 8: TECH DECISIONS -->
+  <!-- ============================================ -->
+
+  <div class="section">
+    <div class="section-label">Part 8</div>
+    <h2>Key Technical Decisions</h2>
+
+    <div class="tag-row">
+      <span class="tag">CSS animations over JS (performance)</span>
+      <span class="tag">Intersection Observer for scroll reveals</span>
+      <span class="tag">Server Components by default</span>
+      <span class="tag">Edge runtime for AI chat API</span>
+      <span class="tag">Supabase RLS for security</span>
+      <span class="tag">ISR for poem/poet pages</span>
+      <span class="tag">next/image for all images</span>
+      <span class="tag">CSS logical properties for RTL</span>
+      <span class="tag">Framer Motion for complex animations</span>
+      <span class="tag">Cmd+K search modal pattern</span>
+    </div>
+
+    <div class="highlight">
+      <p><strong>No over-engineering:</strong> We use Tailwind utilities, not a custom design system. We use Supabase, not a custom backend. We keep the component tree shallow. Every dependency must earn its place.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section" style="text-align:center; padding: 20px 0;">
+    <p style="color:#52525b; font-size:0.85rem;">Ready to build Phase 2 with these guidelines.</p>
+    <p style="color:#c8a96e; font-weight:600; font-size:1rem; margin-top:8px;">UrduNazm — Where poetry meets premium design.</p>
+  </div>
+
+</div>
+</body>
+</html>

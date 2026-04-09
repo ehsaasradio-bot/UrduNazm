@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UrduNazm — Project Build Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #09090b;
+    color: #fafafa;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #27272a;
+  }
+
+  header h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #f4f4f5, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  header p { color: #71717a; font-size: 1rem; font-weight: 300; }
+
+  .stack-bar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .stack-bar span {
+    background: #18181b;
+    border: 1px solid #27272a;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    font-weight: 500;
+  }
+
+  .phase {
+    margin-bottom: 48px;
+    background: #0f0f12;
+    border: 1px solid #1c1c22;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .phase:hover { border-color: #3f3f46; }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    border-bottom: 1px solid #1c1c22;
+  }
+
+  .phase-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .phase-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .phase-header .badge {
+    margin-left: auto;
+    font-size: 0.7rem;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-body { padding: 24px 28px; }
+  .phase-body p { color: #a1a1aa; font-size: 0.9rem; margin-bottom: 16px; }
+
+  .task-list { list-style: none; display: grid; gap: 8px; }
+
+  .task-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #d4d4d8;
+    padding: 8px 12px;
+    background: #18181b;
+    border-radius: 8px;
+  }
+
+  .task-list li::before {
+    content: '→';
+    color: #52525b;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .task-list li.done { opacity: 0.5; text-decoration: line-through; }
+  .task-list li.done::before { content: '✓'; color: #4ade80; }
+
+  .files { margin-top: 16px; padding-top: 16px; border-top: 1px solid #1c1c22; }
+
+  .files h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #52525b;
+    margin-bottom: 8px;
+  }
+
+  .file-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .file-list code {
+    background: #1a1a2e;
+    color: #7c83db;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  /* Status badges */
+  .status-done { background: #14532d; color: #4ade80; border: 1px solid #166534; font-size: 0.65rem; padding: 3px 10px; border-radius: 100px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .status-next { background: #422006; color: #fb923c; border: 1px solid #9a3412; font-size: 0.65rem; padding: 3px 10px; border-radius: 100px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .status-pending { background: #18181b; color: #52525b; border: 1px solid #27272a; font-size: 0.65rem; padding: 3px 10px; border-radius: 100px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+
+  /* Phase colors */
+  .phase-foundation .phase-number { background: #1e3a5f; color: #60a5fa; }
+  .phase-foundation .badge { background: #1e3a5f33; color: #60a5fa; border: 1px solid #1e3a5f; }
+  .phase-layout .phase-number { background: #3b1f5e; color: #c084fc; }
+  .phase-layout .badge { background: #3b1f5e33; color: #c084fc; border: 1px solid #3b1f5e; }
+  .phase-database .phase-number { background: #1a3f2e; color: #4ade80; }
+  .phase-database .badge { background: #1a3f2e33; color: #4ade80; border: 1px solid #1a3f2e; }
+  .phase-home .phase-number { background: #5c3d1e; color: #fb923c; }
+  .phase-home .badge { background: #5c3d1e33; color: #fb923c; border: 1px solid #5c3d1e; }
+  .phase-poets .phase-number { background: #5e1e3b; color: #f472b6; }
+  .phase-poets .badge { background: #5e1e3b33; color: #f472b6; border: 1px solid #5e1e3b; }
+  .phase-poems .phase-number { background: #1e5e5a; color: #2dd4bf; }
+  .phase-poems .badge { background: #1e5e5a33; color: #2dd4bf; border: 1px solid #1e5e5a; }
+  .phase-blog .phase-number { background: #5e4f1e; color: #facc15; }
+  .phase-blog .badge { background: #5e4f1e33; color: #facc15; border: 1px solid #5e4f1e; }
+  .phase-auth .phase-number { background: #5e1e1e; color: #f87171; }
+  .phase-auth .badge { background: #5e1e1e33; color: #f87171; border: 1px solid #5e1e1e; }
+  .phase-bookmarks .phase-number { background: #1e4a5e; color: #38bdf8; }
+  .phase-bookmarks .badge { background: #1e4a5e33; color: #38bdf8; border: 1px solid #1e4a5e; }
+  .phase-search .phase-number { background: #4a1e5e; color: #e879f9; }
+  .phase-search .badge { background: #4a1e5e33; color: #e879f9; border: 1px solid #4a1e5e; }
+  .phase-ai .phase-number { background: #1e5e34; color: #34d399; }
+  .phase-ai .badge { background: #1e5e3433; color: #34d399; border: 1px solid #1e5e34; }
+  .phase-seo .phase-number { background: #5e5e1e; color: #d4d44a; }
+  .phase-seo .badge { background: #5e5e1e33; color: #d4d44a; border: 1px solid #5e5e1e; }
+  .phase-deploy .phase-number { background: #2e2e5e; color: #818cf8; }
+  .phase-deploy .badge { background: #2e2e5e33; color: #818cf8; border: 1px solid #2e2e5e; }
+
+  footer {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid #27272a;
+    margin-top: 20px;
+    color: #52525b;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6rem; }
+    .phase-header { padding: 16px 20px; flex-wrap: wrap; }
+    .phase-body { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>UrduNazm — Build Plan</h1>
+    <p>A premium Urdu & English poetry platform</p>
+    <div class="stack-bar">
+      <span>Next.js 15 App Router</span>
+      <span>Supabase</span>
+      <span>Vercel</span>
+      <span>OpenAI API</span>
+      <span>Tailwind CSS v4</span>
+    </div>
+  </header>
+
+  <!-- Phase 1 -->
+  <div class="phase phase-foundation">
+    <div class="phase-header">
+      <div class="phase-number">01</div>
+      <h2>Project Foundation</h2>
+      <span class="badge">Setup</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Initialize the project with all configurations, folder structure, fonts, and environment setup.</p>
+      <ul class="task-list">
+        <li class="done">Initialize Next.js 15 with App Router and TypeScript</li>
+        <li class="done">Configure Tailwind CSS v4 with custom design tokens</li>
+        <li class="done">Setup Gulzar font (Urdu) + Inter font (English)</li>
+        <li class="done">Create Supabase client utility (server + browser + middleware)</li>
+        <li class="done">Setup environment variables template</li>
+        <li class="done">Define folder structure: app/, components/, lib/, types/</li>
+        <li class="done">Create CLAUDE.md with project conventions</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase phase-layout">
+    <div class="phase-header">
+      <div class="phase-number">02</div>
+      <h2>Layout, Core UI & Theme</h2>
+      <span class="badge">UI/UX</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Root layout, navigation, footer, dark/light theme, reusable UI primitives, homepage, CMS, and locked theme package.</p>
+      <ul class="task-list">
+        <li class="done">Root layout with metadata, viewport, OG, Twitter card</li>
+        <li class="done">Glass Navbar — logo, nav links, theme toggle, login, CTA, mobile drawer</li>
+        <li class="done">Footer — logo, description, 3 link columns, copyright</li>
+        <li class="done">Dark/Light theme toggle with localStorage persistence + FOUC prevention</li>
+        <li class="done">UI Primitives: Button, Card, Container, Badge, Input, Skeleton</li>
+        <li class="done">UrduText component with RTL support</li>
+        <li class="done">Homepage: Hero with gradient, Poet bar, Features, Verse of the Day, CTA</li>
+        <li class="done">CMS config (cms.ts) — single source of truth for all text</li>
+        <li class="done">Theme tokens documented (theme.ts)</li>
+        <li class="done">Blog components: BlogCard, BlogSidebar, BlogPost with prose typography</li>
+        <li class="done">Hero gradient — LOCKED as final theme</li>
+        <li class="done">SEO: robots.ts, sitemap.ts, not-found.tsx, canonical URL</li>
+        <li class="done">Accessibility: skip-to-content, aria-labels, reduced motion, semantic HTML</li>
+        <li class="done">Performance: Next.js Image, dns-prefetch, font swap</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase phase-database">
+    <div class="phase-header">
+      <div class="phase-number">03</div>
+      <h2>Supabase Schema & Seed Data</h2>
+      <span class="badge">Database</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Design and create all database tables, relationships, indexes, RLS policies, and seed with initial data.</p>
+      <ul class="task-list">
+        <li class="done"><strong>poets</strong> — id, name_en, name_ur, slug, bio_en, bio_ur, image_url, born, died, era</li>
+        <li class="done"><strong>poems</strong> — id, title_en, title_ur, content_ur, content_en, poet_id, category_id, slug, featured, fts</li>
+        <li class="done"><strong>categories</strong> — id, name_en, name_ur, slug</li>
+        <li class="done"><strong>blogs</strong> — id, title_en, title_ur, content_en, content_ur, excerpt_en, slug, cover_image, category, author_name, published</li>
+        <li class="done"><strong>bookmarks</strong> — id, user_id, poem_id, created_at</li>
+        <li class="done"><strong>profiles</strong> — id (FK auth.users), display_name, avatar_url, role + auto-create trigger</li>
+        <li class="done">RLS policies: public read for poems/poets/blogs, authenticated write for bookmarks</li>
+        <li class="done">SQL migration file + full-text search index</li>
+        <li class="done">Seed data: 5 categories, 6 poets, 12 poems, 1 blog</li>
+        <li class="done">TypeScript types + server-side query helpers</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>supabase/migrations/001_initial.sql</code>
+          <code>supabase/seed.sql</code>
+          <code>types/database.ts</code>
+          <code>lib/supabase/queries.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase phase-home">
+    <div class="phase-header">
+      <div class="phase-number">04</div>
+      <h2>Homepage — Dynamic Content</h2>
+      <span class="badge">Feature</span>
+      <span class="status-next">Next</span>
+    </div>
+    <div class="phase-body">
+      <p>Connect homepage sections to Supabase data — featured poems, poets, verse of the day, recent blogs.</p>
+      <ul class="task-list">
+        <li>Featured Poems section — 3-4 poem cards fetched from Supabase</li>
+        <li>Featured Poets section — avatar cards from Supabase</li>
+        <li>Verse of the Day — random/daily poem from database</li>
+        <li>Recent Blog Posts — 2-3 blog preview cards</li>
+        <li>Server-side data fetching with proper loading states</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/page.tsx (update)</code>
+          <code>components/home/FeaturedPoems.tsx</code>
+          <code>components/home/FeaturedPoets.tsx</code>
+          <code>components/home/RecentBlogs.tsx</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase phase-poets">
+    <div class="phase-header">
+      <div class="phase-number">05</div>
+      <h2>Poets</h2>
+      <span class="badge">Feature</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Browse all poets and view individual poet profiles with their complete works.</p>
+      <ul class="task-list">
+        <li class="done">Poets listing page — grid of poet cards grouped by era (Classical / Modern)</li>
+        <li class="done">Individual poet page — bio (Urdu + English), avatar, era badge, poems list</li>
+        <li class="done">Era-based grouping with stats bar</li>
+        <li class="done">Dynamic routes: /poets and /poets/[slug] with SEO metadata</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/poets/page.tsx</code>
+          <code>app/poets/[slug]/page.tsx</code>
+          <code>components/poets/PoetCard.tsx</code>
+          <code>components/poets/PoetProfile.tsx</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="phase phase-poems">
+    <div class="phase-header">
+      <div class="phase-number">06</div>
+      <h2>Poems</h2>
+      <span class="badge">Feature</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>The core content — beautiful Urdu Nastaliq rendering with bilingual display.</p>
+      <ul class="task-list">
+        <li class="done">Poems listing page — filterable by category with pill UI</li>
+        <li class="done">Individual poem page — full Urdu Nastaliq with RTL + line breaks</li>
+        <li class="done">English translation toggle (collapsible section)</li>
+        <li class="done">Share button + poet link in actions bar</li>
+        <li class="done">Category badges + featured badges on poem cards</li>
+        <li class="done">Dynamic routes: /poems and /poems/[slug] with SEO metadata</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/poems/page.tsx</code>
+          <code>app/poems/[slug]/page.tsx</code>
+          <code>components/poems/PoemCard.tsx</code>
+          <code>components/poems/PoemView.tsx</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="phase phase-blog">
+    <div class="phase-header">
+      <div class="phase-number">07</div>
+      <h2>Blog</h2>
+      <span class="badge">Feature</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Blog section for articles about poetry, poets, and Urdu literature. Components pre-built in Phase 2.</p>
+      <ul class="task-list">
+        <li class="done">Blog listing page — connect BlogCard to Supabase data</li>
+        <li class="done">Blog detail page — connect BlogPost to Supabase</li>
+        <li class="done">Category filtering via pill buttons</li>
+        <li class="done">Dynamic routes: /blog and /blog/[slug]</li>
+        <li class="done">getBlogCategories query for distinct categories</li>
+        <li class="done">SEO metadata with generateMetadata</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/blog/page.tsx</code>
+          <code>app/blog/[slug]/page.tsx</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 8 -->
+  <div class="phase phase-auth">
+    <div class="phase-header">
+      <div class="phase-number">08</div>
+      <h2>Authentication (Google Login)</h2>
+      <span class="badge">Auth</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Google OAuth via Supabase Auth. User profiles and protected routes.</p>
+      <ul class="task-list">
+        <li class="done">Google OAuth login flow (LoginForm component)</li>
+        <li class="done">Auth callback route handler (code → session exchange)</li>
+        <li class="done">Login page with error handling and redirect support</li>
+        <li class="done">useAuth hook for client-side session awareness</li>
+        <li class="done">UserMenu component (avatar, name, sign out)</li>
+        <li class="done">Navbar auth state (avatar when logged in, login button when not)</li>
+        <li class="done">Protected route middleware (/bookmarks requires auth)</li>
+        <li class="done">Redirect logged-in users away from /login</li>
+        <li class="done">Mobile menu auth state</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/auth/callback/route.ts</code>
+          <code>app/login/page.tsx</code>
+          <code>components/auth/LoginForm.tsx</code>
+          <code>components/auth/UserMenu.tsx</code>
+          <code>hooks/useAuth.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 9 -->
+  <div class="phase phase-bookmarks">
+    <div class="phase-header">
+      <div class="phase-number">09</div>
+      <h2>Bookmarks</h2>
+      <span class="badge">Feature</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Allow logged-in users to save favorite poems and access them from their profile.</p>
+      <ul class="task-list">
+        <li class="done">Bookmark queries — getBookmarks, isBookmarked, addBookmark, removeBookmark</li>
+        <li class="done">BookmarkButton with optimistic UI + useTransition</li>
+        <li class="done">Save/unsave works client-side via Supabase browser client</li>
+        <li class="done">/bookmarks page — grid of saved poems with remove button</li>
+        <li class="done">Empty state with CTA to browse poems</li>
+        <li class="done">Login redirect for unauthenticated users</li>
+        <li class="done">Server-side bookmark state passed to PoemView</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/bookmarks/page.tsx</code>
+          <code>components/BookmarkButton.tsx</code>
+          <code>lib/supabase/bookmarks.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 10 -->
+  <div class="phase phase-search">
+    <div class="phase-header">
+      <div class="phase-number">10</div>
+      <h2>Search</h2>
+      <span class="badge">Feature</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Global search across poems, poets, and blog posts with instant results.</p>
+      <ul class="task-list">
+        <li class="done">Search query — ilike across poems, poets, blogs in parallel</li>
+        <li class="done">SearchModal with Cmd/Ctrl+K shortcut, debounced live results</li>
+        <li class="done">Search icon in Navbar (desktop pill + mobile icon)</li>
+        <li class="done">Hero search card opens SearchModal on click</li>
+        <li class="done">/search page with full results grouped by type</li>
+        <li class="done">SearchInput component with URL-synced debounce</li>
+        <li class="done">Results grouped: Poems / Poets / Blog with "View all" link</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/search/page.tsx</code>
+          <code>components/SearchModal.tsx</code>
+          <code>lib/supabase/search.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 11 -->
+  <div class="phase phase-ai">
+    <div class="phase-header">
+      <div class="phase-number">11</div>
+      <h2>AI Chat</h2>
+      <span class="badge">AI</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>OpenAI-powered conversational AI for poetry exploration, translation, and discussion.</p>
+      <ul class="task-list">
+        <li>Chat UI — dedicated /chat page (hero search card is the entry point)</li>
+        <li>Streaming responses using OpenAI API with Edge runtime</li>
+        <li>System prompt tuned for Urdu poetry expertise</li>
+        <li>Features: explain verse, translate, suggest similar poems, discuss style</li>
+        <li>Session-based chat history</li>
+        <li>Rate limiting to prevent abuse</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/chat/page.tsx</code>
+          <code>app/api/chat/route.ts</code>
+          <code>components/chat/ChatWindow.tsx</code>
+          <code>components/chat/ChatMessage.tsx</code>
+          <code>lib/openai.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 12 -->
+  <div class="phase phase-seo">
+    <div class="phase-header">
+      <div class="phase-number">12</div>
+      <h2>SEO & Polish</h2>
+      <span class="badge">Optimization</span>
+      <span class="status-done">Done</span>
+    </div>
+    <div class="phase-body">
+      <p>Final refinements — structured data, performance audit, error handling, loading states.</p>
+      <ul class="task-list">
+        <li class="done">Dynamic metadata for homepage (OG, Twitter, canonical)</li>
+        <li class="done">robots.ts and sitemap.ts</li>
+        <li class="done">not-found.tsx (404 page)</li>
+        <li class="done">Accessibility audit (skip-to-content, aria, reduced motion)</li>
+        <li>Structured data (JSON-LD) for poems and poets</li>
+        <li>Dynamic metadata for all sub-pages</li>
+        <li>Loading skeletons for all data-fetching pages</li>
+        <li>Error boundaries (error.tsx)</li>
+        <li>Favicon + apple-touch-icon + OG image</li>
+        <li>Lighthouse performance audit</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>app/error.tsx</code>
+          <code>app/loading.tsx</code>
+          <code>public/favicon.ico</code>
+          <code>public/og-image.png</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 13 -->
+  <div class="phase phase-deploy">
+    <div class="phase-header">
+      <div class="phase-number">13</div>
+      <h2>Deploy</h2>
+      <span class="badge">Launch</span>
+      <span class="status-next">Next</span>
+    </div>
+    <div class="phase-body">
+      <p>Ship it. Deploy to Vercel, connect domain, and go live.</p>
+      <ul class="task-list">
+        <li>Push to GitHub repository</li>
+        <li>Connect repo to Vercel</li>
+        <li>Configure environment variables on Vercel</li>
+        <li>Setup custom domain</li>
+        <li>Enable Vercel Analytics</li>
+        <li>Final production testing and smoke tests</li>
+        <li>Supabase production project setup</li>
+      </ul>
+      <div class="files">
+        <h4>Key Files</h4>
+        <div class="file-list">
+          <code>vercel.json</code>
+          <code>.env.production</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>UrduNazm — 13 Phases &middot; Next.js 15 + Supabase + OpenAI &middot; Phases 1-10 Complete &middot; Phase 11 Next</p>
+  </footer>
+
+</div>
+</body>
+</html>
