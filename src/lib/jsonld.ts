@@ -58,10 +58,17 @@ export function poemSchema(poem: {
   content_ur: string;
   content_en?: string | null;
   slug: string;
-  category?: string | null;
+  category?: { name_en: string } | string | null;
   created_at: string;
   poet: { name_en: string; name_ur: string; slug: string };
 }) {
+  const genre =
+    poem.category == null
+      ? "Urdu Poetry"
+      : typeof poem.category === "string"
+      ? poem.category
+      : poem.category.name_en;
+
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -69,7 +76,7 @@ export function poemSchema(poem: {
     alternateName: poem.title_ur,
     url: `${BASE_URL}/poems/${poem.slug}`,
     inLanguage: "ur",
-    genre: poem.category ?? "Urdu Poetry",
+    genre,
     datePublished: poem.created_at,
     text: poem.content_ur.slice(0, 500),
     author: {
